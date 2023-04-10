@@ -1,22 +1,3 @@
-# import asyncio
-# import websockets
-
-
-# # create handler for each connection
-
-# async def handler(websocket):
-#     while True:
-#         data = await websocket.recv()
-#         reply = f"Data recieved as:  {data}!"
-#         print(reply)
-
-
-# async def main():
-#     print("Started!")
-#     async with websockets.serve(handler, "localhost", 5000):
-#         await asyncio.Future()
-# asyncio.run(main())
-
 import asyncio
 import websockets
 import wave
@@ -26,17 +7,17 @@ import struct
 
 
 async def handler(websocket):
-    data = []
+    with open("data.bin", "wb+") as f:
+        f.close()
     while True:
         try:
             data_chunk = await websocket.recv()
         except websockets.exceptions.ConnectionClosed:
             break
         print(data_chunk)
-        data.append(data_chunk)
-        # pprint.pprint(data)
-    with open("data.bin", "wb") as f:
-        f.write(data)
+        with open("data.bin", "ab+") as f:
+            f.write(data_chunk)
+
     channels = 1
     sample_width = 2  # 16-bit
     frame_rate = 44100

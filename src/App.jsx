@@ -17,9 +17,10 @@ function pcmEncode(input) {
 let scriptProcessor;
 let streamVar;
 let pcmData = [];
-const ws = new WebSocket("ws://localhost:5000");
+let ws;
 
 async function audioRecord() {
+  ws = new WebSocket("ws://localhost:5000");
   streamVar = await navigator.mediaDevices.getUserMedia({ audio: true });
   const audioContext = new AudioContext();
   const mediaStreamSource = audioContext.createMediaStreamSource(streamVar);
@@ -31,6 +32,16 @@ async function audioRecord() {
     const inputBuffer = event.inputBuffer.getChannelData(0);
     pcmData.push(...inputBuffer);
   };
+
+  setInterval(() => {
+    const intData = new Int16Array(pcmData.length);
+    for (let i = 0; i < pcmData.length; i++) {
+      const sample = Math.max(-1, Math.min(1, pcmData[i]));
+      intData[i] = sample < 0 ? sample * 0x8000 : sample * 0x7fff;
+    }
+    ws.send(intData);
+    pcmData = [];
+  }, 10000);
 }
 
 function App() {
@@ -48,12 +59,13 @@ function App() {
           onClick={() => {
             scriptProcessor.disconnect();
             streamVar.getTracks().forEach((track) => track.stop());
-            const intData = new Int16Array(pcmData.length);
-            for (let i = 0; i < pcmData.length; i++) {
-              const sample = Math.max(-1, Math.min(1, pcmData[i]));
-              intData[i] = sample < 0 ? sample * 0x8000 : sample * 0x7fff;
-            }
-            ws.send(intData);
+            ws.close();
+            // const intData = new Int16Array(pcmData.length);
+            // for (let i = 0; i < pcmData.length; i++) {
+            //   const sample = Math.max(-1, Math.min(1, pcmData[i]));
+            //   intData[i] = sample < 0 ? sample * 0x8000 : sample * 0x7fff;
+            // }
+            // ws.send(intData);
           }}
         >
           Stop Recording
