@@ -12,6 +12,8 @@ async def handler(websocket):
     while True:
         try:
             data_chunk = await websocket.recv()
+            if data_chunk == "done":
+                break
         except websockets.ConnectionClosed:
             break
         with open("data.bin", "ab+") as f:
