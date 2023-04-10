@@ -1,5 +1,5 @@
 # StudyBuddy-AI
 
 ## Starting the Client
-```yarn dev```
+```yarn dev``` (or)
 ```npm run dev```
