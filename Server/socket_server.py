@@ -12,8 +12,6 @@ async def handler(websocket):
     while True:
         try:
             data_chunk = await websocket.recv()
-            if data_chunk == "done":
-                break
         except websockets.ConnectionClosed:
             break
         with open("data.bin", "ab+") as f:
@@ -40,6 +38,7 @@ async def handler(websocket):
     from model import summarization
     summary = summarization.summary()
     await websocket.send(summary)
+
 async def main():
     print("Started!")
     async with websockets.serve(handler, "localhost", 5000):

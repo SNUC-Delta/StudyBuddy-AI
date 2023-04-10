@@ -60,17 +60,10 @@ function App() {
             scriptProcessor.disconnect();
             streamVar.getTracks().forEach((track) => track.stop());
             ws.close();
-            // const intData = new Int16Array(pcmData.length);
-            // for (let i = 0; i < pcmData.length; i++) {
-            //   const sample = Math.max(-1, Math.min(1, pcmData[i]));
-            //   intData[i] = sample < 0 ? sample * 0x8000 : sample * 0x7fff;
-            // }
-            // ws.send(intData);
           }}
         >
           Stop Recording
         </button>
-        <div className="gen-pdf">Generated PDF</div>
       </div>
     </div>
   );
