@@ -1,5 +1,6 @@
 import viteLogo from "./assets/audience.png";
 import "./App.css";
+import { useState } from "react";
 
 function pcmEncode(input) {
   const output = new Uint8Array(input.length * 2);
@@ -17,10 +18,9 @@ function pcmEncode(input) {
 let scriptProcessor;
 let streamVar;
 let pcmData = [];
-let ws;
+let ws = new WebSocket("ws://localhost:5000");
 
 async function audioRecord() {
-  ws = new WebSocket("ws://localhost:5000");
   streamVar = await navigator.mediaDevices.getUserMedia({ audio: true });
   const audioContext = new AudioContext();
   const mediaStreamSource = audioContext.createMediaStreamSource(streamVar);
@@ -45,6 +45,12 @@ async function audioRecord() {
 }
 
 function App() {
+  const [getTxt, setGetTxt] = useState("");
+
+  ws.onmessage = (eV) => {
+    setGetTxt(eV.data);
+  };
+
   return (
     <div className="App">
       <div>
@@ -59,12 +65,13 @@ function App() {
           onClick={() => {
             scriptProcessor.disconnect();
             streamVar.getTracks().forEach((track) => track.stop());
-            ws.close();
+            ws.send("Done");
           }}
         >
           Stop Recording
         </button>
       </div>
+      <button>{getTxt == "" ? "Generating" : getTxt}</button>
     </div>
   );
 }
