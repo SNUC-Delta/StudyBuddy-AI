@@ -35,9 +35,10 @@ async def handler(websocket):
                 # write the sample to the WAV file
                 wav_file.writeframesraw(struct.pack("<h", sample))
                 data_chunk = bin_file.read(2)
-    from model import summarization
-    summary = summarization.summary()
-    await websocket.send(summary)
+    # from model import summarization
+    # summary = summarization.summary()
+    await websocket.send("Done")
+
 
 async def main():
     print("Started!")
