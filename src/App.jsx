@@ -41,7 +41,7 @@ async function audioRecord() {
     }
     ws.send(intData);
     pcmData = [];
-  }, 10000);
+  }, 500);
 }
 
 function App() {
