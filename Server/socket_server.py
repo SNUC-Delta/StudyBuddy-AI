@@ -12,9 +12,8 @@ async def handler(websocket):
     while True:
         try:
             data_chunk = await websocket.recv()
-        except websockets.exceptions.ConnectionClosed:
+        except websockets.ConnectionClosed:
             break
-        print(data_chunk)
         with open("data.bin", "ab+") as f:
             f.write(data_chunk)
 
