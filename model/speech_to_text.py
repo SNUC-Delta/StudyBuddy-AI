@@ -13,4 +13,3 @@ def startConvertion(path = file):
         return "Speech not detected"
 text = startConvertion()
 
-print(text)
