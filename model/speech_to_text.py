@@ -4,10 +4,13 @@ file = "Server\output.wav"
 r = sr.Recognizer()
 
 def startConvertion(path = file): 
-    with sr.AudioFile(path) as source:
-        audio_file = r.record(source)
-        output = r.recognize_google(audio_file, language='pt', show_all=True)
-        return output["alternative"][0]['transcript']
-
+    try:
+        with sr.AudioFile(path) as source:
+            audio_file = r.record(source)
+            output = r.recognize_google(audio_file, language='pt', show_all=True)
+            return output["alternative"][0]['transcript']
+    except TypeError:
+        return "Speech not detected"
 text = startConvertion()
 
+print(text)
