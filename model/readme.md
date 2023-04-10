@@ -1,4 +1,9 @@
+
+# Important
+
 Install pytorch before running summarization.py
 (https://pytorch.org/get-started/locally/)
+Install other dependencies using `pip install -r model/requirements.txt`
 
-summarization.py returns final summarized transcript directly
+Run the websocket server using `python socket_server.py`
+
