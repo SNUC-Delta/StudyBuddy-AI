@@ -10,12 +10,13 @@ import cloudinary.api
 from dotenv import load_dotenv
 load_dotenv()
 
-config = cloudinary.config(
-  cloud_name = "CLOUD_NAME",
-  api_key = "API_KEY",
-  api_secret = "API_SECRET",
-  secure = True
+cloudinary.config(
+    cloud_name="do69a1zp4",
+    api_key="896278828196432",
+    api_secret="5r5Jvd6Y65VM4eZ4mN45mfX5EW0",
+    secure=True
 )
+
 
 async def sockHandler(webSocket):
     unID = uuid.uuid1()
@@ -58,8 +59,10 @@ async def sockHandler(webSocket):
                 # write the sample to the WAV file
                 wav_file.writeframesraw(struct.pack("<h", sample))
                 data_chunk = binFile.read(2)
-        # audSummary = summarization.summary(f"./dist/Audio/{unID}_output.wav")
-        cloudinary.uploader.upload(f"./outputs/summary.pdf", public_id=f"{unID}_pdf")
+        summarization.summary(
+            f"./dist/Audio/4b45207c-dab8-11ed-a574-00155ddfeb0b_output.wav", unID)
+        cloudinary.uploader.upload(
+            f"./dist/PDF/{unID}_pdf.pdf", public_id=f"{unID}_pdf")
         srcURL = cloudinary.CloudinaryResource(f"{unID}_pdf").build_url()
         await webSocket.send(srcURL)
 
