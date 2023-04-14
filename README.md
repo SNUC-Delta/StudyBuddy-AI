@@ -13,4 +13,4 @@ Command: ```python ./server/server.py```
 3. Client Requirements -- ```yarn install``` or ```npm i```
 
 ## Bugs
-1. website not working
+You tell me
