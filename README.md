@@ -13,5 +13,4 @@ Command: ```python ./server/server.py```
 3. Client Requirements -- ```yarn install``` or ```npm i```
 
 ## Bugs
-1. Speech-to-Text is bugged. I am working on it
-2. You tell me
+1. website not working
