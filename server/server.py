@@ -58,8 +58,8 @@ async def sockHandler(webSocket):
                 # write the sample to the WAV file
                 wav_file.writeframesraw(struct.pack("<h", sample))
                 data_chunk = binFile.read(2)
-        audSummary = summarization.summary(f"./dist/Audio/{unID}_output.wav", unID)
-        cloudinary.uploader.upload(f"./dist/PDF/{unID}_pdf.pdf", public_id=f"{unID}_pdf")
+        # audSummary = summarization.summary(f"./dist/Audio/{unID}_output.wav")
+        cloudinary.uploader.upload(f"./outputs/summary.pdf", public_id=f"{unID}_pdf")
         srcURL = cloudinary.CloudinaryResource(f"{unID}_pdf").build_url()
         await webSocket.send(srcURL)
 

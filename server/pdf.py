@@ -12,4 +12,7 @@ pdf.cell(200, 10, txt = "StudyBuddy.ai",
 pdf.cell(200, 10, txt = "Generated Summary.",
          ln = 2, align = 'C')
  
-
+pdf.cell(200, 10, txt = str(mainOut),
+         ln = 4, align = 'L')
+ 
+pdf.output("model\outputs\summary.pdf")  
