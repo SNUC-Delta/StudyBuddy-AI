@@ -45,11 +45,12 @@ async function audioRecord() {
 }
 
 function App() {
-  const [getTxt, setGetTxt] = useState("");
+
+  const [urlText, setUrlText] = useState("Generating")
 
   ws.onmessage = (eV) => {
-    setGetTxt(eV.data);
-  };
+    setUrlText(eV.data)
+  }
 
   return (
     <div className="App">
@@ -71,7 +72,7 @@ function App() {
           Stop Recording
         </button>
       </div>
-      <button>{getTxt == "" ? "Generating" : getTxt}</button>
+      {(urlText == "Generating") ? "Generating PDF" : <a href={urlText}>Download PDF</a>}
     </div>
   );
 }
