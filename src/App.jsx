@@ -46,7 +46,7 @@ async function audioRecord() {
 
 function App() {
 
-  const [urlText, setUrlText] = useState("Generating")
+  const [urlText, setUrlText] = useState("")
 
   ws.onmessage = (eV) => {
     setUrlText(eV.data)
@@ -61,7 +61,10 @@ function App() {
       </div>
       <h1>StudyBuddy.AI</h1>
       <div className="card">
-        <button onClick={() => audioRecord()}>Start Recording</button>
+        <button onClick={() => {
+          setUrlText("Generating")
+          audioRecord()
+          }}>Start Recording</button>
         <button
           onClick={() => {
             scriptProcessor.disconnect();
@@ -72,7 +75,7 @@ function App() {
           Stop Recording
         </button>
       </div>
-      {(urlText == "Generating") ? "Generating PDF" : <a href={urlText}>Download PDF</a>}
+      {(urlText != "") ? (urlText == "Generating") ? "Generating PDF" : <a href={urlText}>Download PDF</a> : "Awaiting Audio Input"}
     </div>
   );
 }
